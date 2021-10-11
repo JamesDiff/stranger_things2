@@ -6,6 +6,7 @@ import {fetchPosts} from '../Api'
 const Posts = () => {
 
     const [posts, setPosts] = useState([]);
+    const [postId, setPostId] = useState(null);
 
     useEffect( async () => {
         const results = await fetchPosts();
@@ -16,10 +17,22 @@ const Posts = () => {
         <div id="posts">
             {posts.map( (post, index) => {
                 return(
-                    <div>
-                        <h1 key={index}>{post.title}</h1>
-                        <h2 key={index}>{post.description}</h2>
-                        <h3 key={index}>{post.price}</h3>
+                    <div key={index}>
+                        <h1>{post.title}</h1>
+                        <h2>{post.description}</h2>
+                        <h3>{post.price}</h3>
+                        <button 
+                            type="button"
+                            className="btn btn-outline-primary"
+                            onClick={() => setPostId(post.id)}
+                            > Edit
+                        </button>
+                        <button 
+                            type="button"
+                            className="btn btn-outline-primary"
+                            onClick={() => deletePost(post.id)}
+                            > Delete
+                        </button>
                     </div>
                 )
             } ) }
