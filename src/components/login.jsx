@@ -1,7 +1,11 @@
 import React, { useState } from 'react';
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
-async function login(userName, passWord, setToken){
+import { makeHeader } from "../Api";
+
+
+
+async function login(userName, passWord){
     const response = await fetch('https://strangers-things.herokuapp.com/api/2107-CSU-RM-WEB-PT/users/login', {
         method: "POST",
         headers: {
@@ -15,15 +19,12 @@ async function login(userName, passWord, setToken){
         })
     })
 
-//passheader into various compoenents and use it in place of headers in fetch calls
-
     const result = await response.json();
     console.log(result.data.token);
     const token = result.data.token;
-    setToken(token);
-
     localStorage.setItem("token", token)
-    setHeader(makeHeader(token));
+    return token;
+
  
 }
 
@@ -53,29 +54,24 @@ function register(setToken, username, password, confirmedPassword){
     .catch(console.error);
 }
 
-function makeHeader(token){
-    let temporaryHeader = {
-        'Content-Type': 'application/json'
-    }
-    if (token){
-      temporaryHeader["Authorization"] = "Bearer " + token  
-    } 
-    return temporaryHeader
-} 
-
 
 const Login = ({ setToken, match, setHeader}) => {
     const [userName, setUserName] = useState("username");
     const [password, setPassword] = useState("");
     const [confirmedPassword, setConfirmedPassword] = useState("");
+    const history = useHistory();
+    
 
     return (
         <form
-            onSubmit={(e) => {
+            onSubmit={async (e) => {
                 e.preventDefault();
-                if(match.url === "/register") register(setToken, userName, password, confirmedPassword)
-                if(match.url === "/login") login(userName, passWord, setToken)
-
+                let newToken = null;
+                if(match.url === "/register") newToken = register(userName, password, confirmedPassword);
+                if(match.url === "/login") newToken = await login(userName, password); 
+                setHeader(makeHeader(newToken));
+                setToken(newToken);
+                history.push("/posts") //changed this from "/posts"
 
                 console.log(userName, password, confirmedPassword)
             }}

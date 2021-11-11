@@ -1,41 +1,47 @@
 import React, {useState, useEffect} from 'react';
 
-import {fetchPosts} from '../Api'
+
+import {fetchPosts, deletePost, findPost} from '../Api';
+
+import NewPost from './newPost';
+
+import Search from './Search';
+
+
+
+const Posts = ({history, setSelectedPost, storedToken, headers, setFilteredResults, filteredResults, posts, setPosts}) => {
+    console.log("now these ", posts);
  
-
-const Posts = () => {
-
-    const [posts, setPosts] = useState([]);
-    const [postId, setPostId] = useState(null);
-
-    useEffect( async () => {
-        const results = await fetchPosts();
-        setPosts(results);
-    }, [] );
-
     return (
         <div id="posts">
-            {posts.map( (post, index) => {
-                return(
-                    <div key={index}>
-                        <h1>{post.title}</h1>
-                        <h2>{post.description}</h2>
-                        <h3>{post.price}</h3>
+            {<NewPost headers={headers} setPosts={setPosts} posts={posts}/>}
+            {<Search posts={posts} filteredResults={filteredResults} setFilteredResults={setFilteredResults}/>}
+            {<h2>Listings</h2>}
+            {filteredResults ? filteredResults.map( (post, index) => {
+                return(                    
+                    <div key={index}>                     
+                        <h3>{post.title}</h3>
+                        <h4>{post.description}</h4>
+                        <h4>{post.price}</h4>
                         <button 
                             type="button"
                             className="btn btn-outline-primary"
-                            onClick={() => setPostId(post.id)}
-                            > Edit
+                            onClick={() => deletePost(post._id, storedToken)}   //if post._id === postIdToDelete
+                            > Delete
                         </button>
                         <button 
                             type="button"
                             className="btn btn-outline-primary"
-                            onClick={() => deletePost(post.id)}
-                            > Delete
+                            onClick={() => {
+                                const newSelectedPost = findPost(post._id, posts)
+                                setSelectedPost(newSelectedPost)
+                                history.push("/posts/" + post._id) 
+                            }}                                 
+                            > Post Details
                         </button>
                     </div>
                 )
-            } ) }
+            } ) : null }
 
         </div>
     )
