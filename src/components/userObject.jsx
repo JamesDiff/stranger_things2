@@ -1,22 +1,28 @@
-import React, { useReducer } from 'react'
+import React, { useState, useEffect, useReducer } from 'react'
 import ReactDOM from 'react-dom';
 import {BrowserRouter as Router, Route, Link} from 'react-router-dom';
 
-import fetchObject  from '../Api';
+import { fetchObject }  from '../Api';
 
-const RenderUserObject = (fetchObject, post, index, user) => {
+
+
+const RenderUserObject = ( {user, isLoggedIn, headers, storesToken, } ) => {
     console.log("This is the user: ", user);
+    //const [object, setObject] = useState(null);
+
 
     return (
         <div id="userobject">
-            <div key={index} >
+
+            <h2>Hi, {user ? user.username : "guest"} </h2>
+            <div>
             <Link to="/posts"> Listings </Link>
-                <h2>Messages</h2>
-                { user ? user.messages.map( (message) => {
+                <h2>Your Messages</h2>
+                { user && user.messages ? user.messages.map( (message) => { 
                     
                     return <>
-                        <p>{ message.post.title} </p>
-                        <p>{ message.fromUser.username }</p>
+                        <h3 >{ message.post.title} </h3>        {/*labels --what's the post title, whats the content, is it avaiable for delivery?*/}
+                        <p>From: { message.fromUser.username }</p>
                         <p>{ message.content }</p>
                         
                     </> 
@@ -24,19 +30,28 @@ const RenderUserObject = (fetchObject, post, index, user) => {
             </div>
 
             <div>
-                <h2>Posts</h2>
-                { user ? user.post.map( () => {
+                <h2>Your Listings</h2>
+                { user ? user.posts.map( (post) => {
+                    
                     return <>
-                        <p>{ } </p>
-                        <p>{ }</p>
-                        <p>{ }</p>
+                        <h3>{ post.title } </h3>
+                        <p>{ post.description }</p>
+                        <h5>{ post.price }</h5>
+                        <></>
+                        { /* post ? post.messages.map ( (message) => {
+                            return (
+                                <>
+                                    <p> From:{ message.fromUser.username }</p> 
+                                    <p>{ message.content }</p>
+                                </>
+                            )
+
+                        }) : null */ }
+                        
                     </> 
                 }): null }
 
             </div>
-                       
-            
-        
     
         </div> )
 

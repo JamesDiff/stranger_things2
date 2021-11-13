@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { Link, useHistory } from "react-router-dom";
 
-import { makeHeader } from "../Api";
+import { makeHeader, fetchObject } from "../Api";
+
 
 
 
@@ -55,25 +56,35 @@ function register(setToken, username, password, confirmedPassword){
 }
 
 
-const Login = ({ setToken, match, setHeader}) => {
+const Login = ({ setToken, match, setHeader, setUser}) => {
     const [userName, setUserName] = useState("username");
     const [password, setPassword] = useState("");
     const [confirmedPassword, setConfirmedPassword] = useState("");
     const history = useHistory();
     
-
     return (
         <form
             onSubmit={async (e) => {
-                e.preventDefault();
-                let newToken = null;
-                if(match.url === "/register") newToken = register(userName, password, confirmedPassword);
-                if(match.url === "/login") newToken = await login(userName, password); 
-                setHeader(makeHeader(newToken));
-                setToken(newToken);
-                history.push("/posts") //changed this from "/posts"
+                try {
+                    e.preventDefault();
+                    let newToken = null;
+                    if(match.url === "/register") newToken = register(userName, password, confirmedPassword);
+                    if(match.url === "/login") newToken = await login(userName, password); 
+                    if(newToken) {
+                        const newHeader = makeHeader(newToken);
+                        const newUser = await fetchObject(newHeader);
+                        console.log(newUser);
+                        setUser(newUser);
+                        setHeader(newHeader);
+                        setToken(newToken);
+                        history.push("/userObject") 
+                    } 
+                    console.log(userName, password, confirmedPassword)
 
-                console.log(userName, password, confirmedPassword)
+                } catch (error) {
+                    console.error(error)
+                }
+                
             }}
         >
             <br />

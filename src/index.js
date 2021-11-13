@@ -23,7 +23,7 @@ const App = () => {
     const [posts, setPosts] = useState([]);
     const [selectedPost, setSelectedPost] = useState({})
     const [postId, setPostId] = useState(null);
-    const [user, setUser] = useState(null);
+    const [user, setUser] = useState(null);  
 
 
     useEffect( async () => {
@@ -73,9 +73,9 @@ const App = () => {
                 }}>Logout</Link>
                 : null }
                         
-            <Route path="/login" render={(routeProps) => <Login {...routeProps} setHeader={setHeader} setToken={setToken}/>}/>
-            <Route path="/register" render={(routeProps) => <Login {...routeProps} setHeader={setHeader} setToken={setToken}/>} />
-            <Route path="/posts" exact render={(routerProps) => <Posts {...routerProps} setSelectedPost={setSelectedPost} setPosts={setPosts} posts={posts} filteredResults={filteredResults} isLoggedIn={!!token} storedToken={token} headers={header}/>} /> 
+            <Route path="/login" render={(routeProps) => <Login {...routeProps} setHeader={setHeader} setToken={setToken} setUser={setUser} />}/>
+            <Route path="/register" render={(routeProps) => <Login {...routeProps} setHeader={setHeader} setToken={setToken} setUser={setUser} />} />
+            <Route path="/posts" exact render={(routerProps) => <Posts {...routerProps} setSelectedPost={setSelectedPost} setPosts={setPosts} posts={posts} filteredResults={filteredResults} setFilteredResults={setFilteredResults} isLoggedIn={!!token} storedToken={token} headers={header}/>} /> 
             <Route path="/posts/:postId" render={(routerProps) => <SinglePost {...routerProps} selectedPost={selectedPost} setSelectedPost={setSelectedPost} posts={posts}/>}/>
             <Route path="/posts/update/:postId" render={(routerProps) => <UpdatePost {...routerProps} selectedPost={selectedPost} storedToken={token} headers={header}/>}/>
             <Route path="/posts/sendmessage/:postId" render={(routerProps) => <SendMessage {...routerProps} selectedPost={selectedPost} storedToken={token} headers={header}/>}/>
