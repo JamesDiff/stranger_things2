@@ -1,60 +1,80 @@
 import React, { useState, useEffect, useReducer } from 'react'
 import ReactDOM from 'react-dom';
-import {BrowserRouter as Router, Route, Link} from 'react-router-dom';
+import { Link, Redirect, useHistory} from 'react-router-dom';
 
 import { fetchObject }  from '../Api';
 
+import { deletePost, fetchPosts } from '../Api';
+
+import { findPost } from '../Api';
+
+//selectedPost && selectedPost.author && user._id
 
 
-const RenderUserObject = ( {user, isLoggedIn, headers, storesToken, } ) => {
-    console.log("This is the user: ", user);
-    //const [object, setObject] = useState(null);
+const RenderUserObject = ( {user, isLoggedIn, headers, post, posts, setPosts, storedToken, setUser } ) => {
 
+    const history = useHistory();
 
     return (
-        <div id="userobject">
-
-            <h2>Hi, {user ? user.username : "guest"} </h2>
+        <>
+       {!storedToken ? <Redirect to="/"/> : (
+            <div id="userobject" className='Route-container'>
+            <h5>Hi, {user ? user.username : "guest"} </h5>
             <div>
-            <Link to="/posts"> Listings </Link>
-                <h2>Your Messages</h2>
-                { user && user.messages ? user.messages.map( (message) => { 
+                <h4>Your Messages</h4>
+                <div className='Messages-container'>
+                  { user && user.messages ? user.messages.map( (message) => { 
                     
                     return <>
-                        <h3 >{ message.post.title} </h3>        {/*labels --what's the post title, whats the content, is it avaiable for delivery?*/}
-                        <p>From: { message.fromUser.username }</p>
-                        <p>{ message.content }</p>
-                        
+                        <div className='Single-message'> 
+                            <h4 >{ message.post.title} </h4>        
+                            <p>From: { message.fromUser.username }</p>
+                            <p>{ message.content }</p> 
+                        </div>
+                
                     </> 
-                }): null }
+                }): null }  
+                </div>
+                
             </div>
-
             <div>
-                <h2>Your Listings</h2>
-                { user ? user.posts.map( (post) => {
-                    
+                <h4>Your Listings</h4>
+                <div className='User-posts-container'>
+                  { user ? user.posts.filter(post => post.active === true).map( (post) => {
                     return <>
-                        <h3>{ post.title } </h3>
+                        <div className='User-single-post'>   
+                        <h4>{ post.title } </h4>
                         <p>{ post.description }</p>
                         <h5>{ post.price }</h5>
-                        <></>
-                        { /* post ? post.messages.map ( (message) => {
-                            return (
-                                <>
-                                    <p> From:{ message.fromUser.username }</p> 
-                                    <p>{ message.content }</p>
-                                </>
-                            )
+                        <div className='Details-button'>      
+                        <button 
+                            type="button"
+                            className="btn btn-outline-primary"
+                            // onClick={() => {
+                            //     const newSelectedPost = findPost(post._id, user.posts)
+                            //     console.log("this is the new selected post, ", newSelectedPost);
+                            //     setSelectedPost(newSelectedPost);
+                            //     history.push("/posts/" + post._id)
+                                 
+                            // }}                                 
+                            > <Link to={`/posts/${post._id}`}>Post Details</Link>
+                        </button>
+                        </div>
 
-                        }) : null */ }
+                    
+                        
+                        </div>
                         
                     </> 
-                }): null }
+                    }): null }
 
+                </div>
+              
             </div>
-    
-        </div> )
-
+        </div>
+       )}
+        </>
+    )
 }
 
 export {RenderUserObject};

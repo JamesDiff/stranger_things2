@@ -29,12 +29,12 @@ async function login(userName, passWord){
  
 }
 
-function register(setToken, username, password, confirmedPassword){
+function register(username, password, confirmedPassword){
     if (password !== confirmedPassword){
         alert("Passwords don't match");
         return;
     }
-    fetch('https://strangers-things.herokuapp.com/api/2107-CSU-RM-WEB-PT/users/register', 
+    const registerToken = fetch('https://strangers-things.herokuapp.com/api/2107-CSU-RM-WEB-PT/users/register', 
         {
         method: "POST",
         headers: {
@@ -50,9 +50,10 @@ function register(setToken, username, password, confirmedPassword){
     
     .then(response => response.json())
     .then(result => {
-    console.log(result);
+    return result.data.token;
     })
     .catch(console.error);
+    return registerToken;
 }
 
 
@@ -63,12 +64,12 @@ const Login = ({ setToken, match, setHeader, setUser}) => {
     const history = useHistory();
     
     return (
-        <form
+        <form className='Route-container'
             onSubmit={async (e) => {
                 try {
                     e.preventDefault();
                     let newToken = null;
-                    if(match.url === "/register") newToken = register(userName, password, confirmedPassword);
+                    if(match.url === "/register") newToken = await register(userName, password, confirmedPassword);
                     if(match.url === "/login") newToken = await login(userName, password); 
                     if(newToken) {
                         const newHeader = makeHeader(newToken);
@@ -110,6 +111,7 @@ const Login = ({ setToken, match, setHeader, setUser}) => {
                 <input
                     type="password"
                     value={password}
+                    minLength="6"
                     onChange={({target: {value}}) => setPassword(value)}
                     className="form-control"
                     id="exampleFormControlInput1"

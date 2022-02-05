@@ -1,25 +1,22 @@
 import React, {useState, useEffect} from "react";
-
 import { useHistory } from "react-router-dom";
 
 
-//import { fetchPosts } from "../Api";
 
-
-
-const UpdatePost = ({posts, setPosts, postId, setPostId, selectedPost, headers}) => {  //do what now?
+const UpdatePost = ({posts, setPosts, postId, setPostId, updateMade, setUpdateMade, currentPost, setCurrentPost, headers, setShowUpdate, setUpdateSuccess}) => {  
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
     const [price, setPrice] = useState("");
+    const history = useHistory();
 
-    console.log("this is the selectedPost._id ", selectedPost._id);
-    console.log("this is the title after it's out of state", title);
-    console.log("this is the header ", headers)
+    useEffect(() => {
+        console.log("update post rendered")
+
+    }, [])
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        console.log('postID: ', postId);
-        const response = await fetch(`http://strangers-things.herokuapp.com/api/2107-CSU-RM-WEB-PT/posts/${selectedPost._id}`, {
+        const response = await fetch(`http://strangers-things.herokuapp.com/api/2107-CSU-RM-WEB-PT/posts/${postId}`, {
             method: "PATCH",
             headers, 
             body: JSON.stringify({
@@ -29,24 +26,28 @@ const UpdatePost = ({posts, setPosts, postId, setPostId, selectedPost, headers})
                 price: price,
                 willDeliver: true}
             })
-            
-            
             }); 
-            
-            const data = await response.json();
-            console.log('data: ', data);
-            if(data && data.title) {
-                const newPosts = posts.map(post => {
-                    if(post_id === postId) {
-                        return data;
-                    } else {
-                        return post;
-                    }
-                });
-                setPosts(newPosts);
+
+            const {data} = await response.json();
+            console.log('update data: ', data);
+            if(data && data.post.title) {
+                // const newPosts = posts.map(post => {
+                //     if(post._id === postId) {
+                //         return data;
+                //     } else {
+                //         return post;
+                //     }
+                //});
+                //setPosts(newPosts);
+                setUpdateSuccess(true);
+                setUpdateMade(updateMade + 1);
                 setTitle('');
-                setBody('');
-                setPostId(null);
+                setDescription('');
+                setShowUpdate(false);
+                //setPostId(null);
+                setCurrentPost(data);
+                history.push('/');
+
             }
 
     }

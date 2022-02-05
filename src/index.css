@@ -1,0 +1,109 @@
+* {
+    margin: 0px;
+    padding: 2px;
+    box-sizing: border-box;  
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+.Routes {
+    padding-top: 120px;
+    display: flex;
+    width: 100%;
+    justify-content: center;
+
+}
+
+
+.Posts-container {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 20px;
+    justify-content: stretch;
+
+}
+
+.Route-container {
+    width: 90%;
+    /* -webkit-box-shadow: 9px 6px 12px 1px rgba(0,0,0,0.34); 
+    box-shadow: 9px 6px 12px 1px rgba(0,0,0,0.34);
+    background-color: #fafcfc; */
+}
+/* max-width */
+
+
+.Single-post{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border-radius: 4px;
+    margin: 10px;
+    padding: 15px;
+    width: 300px;
+    -webkit-box-shadow: 9px 6px 12px 1px rgba(0,0,0,0.34); 
+    box-shadow: 9px 6px 12px 1px rgba(0,0,0,0.34);
+    /* background-color: #fafcfc; */
+    flex-grow: .25;
+}
+
+/* .Details-button{
+    position: relative;
+    bottom: 0px;
+} */
+
+.Single-post-render{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border-radius: 4px;
+    margin: 10px;
+    padding: 10px;
+    width: 300px;
+    -webkit-box-shadow: 9px 6px 12px 1px rgba(0,0,0,0.34); 
+    box-shadow: 9px 6px 12px 1px rgba(0,0,0,0.34);
+    /* background-color: #fafcfc; */
+    flex-grow: .25;
+
+}
+
+.User-posts-container{
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 20px;
+    justify-content: stretch;
+
+}
+
+
+.User-single-post{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border-radius: 4px;
+    margin: 10px;
+    padding: 10px;
+    width: 300px;
+    -webkit-box-shadow: 9px 6px 12px 1px rgba(0,0,0,0.34); 
+    box-shadow: 9px 6px 12px 1px rgba(0,0,0,0.34);
+    background-color: #fafcfc;
+    /* flex-grow: .25; */
+}
+
+
+
+.Messages-container{
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 20px;
+    justify-content: stretch;
+}
+
+.Single-message{
+    border-radius: 4px; 
+    margin: 10px;
+    padding: 10px;
+    width: 300px;
+    -webkit-box-shadow: 9px 6px 12px 1px rgba(0,0,0,0.34); 
+    box-shadow: 9px 6px 12px 1px rgba(0,0,0,0.34);
+    background-color: #fafcfc;
+    /* flex-grow: .25; */
+}

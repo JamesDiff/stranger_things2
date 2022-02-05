@@ -14,7 +14,7 @@ export async function fetchPosts(){
     try{
         const response = await fetch('https://strangers-things.herokuapp.com/api/2107-CSU-RM-WEB-PT/posts');
         const result = await response.json();
-        return result.data.posts;
+        return result.data.posts.reverse();
     } catch (error){
         console.error(error);
     }

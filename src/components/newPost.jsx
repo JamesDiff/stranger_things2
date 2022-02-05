@@ -2,9 +2,7 @@ import React, {useState, useEffect} from "react";
 
 import { fetchPosts } from "../Api";
 
-
-
-export default function NewPost ({headers, setPosts, posts}){
+export default function NewPost ({headers, setPosts, posts, user, updateMade, setUpdateMade}){
     
 
     const [title, setTitle] = useState("");
@@ -13,8 +11,8 @@ export default function NewPost ({headers, setPosts, posts}){
     
     return (
         <div>
-            <h4>Create a new listing</h4>
-            <form onSubmit={async (event) => {
+            { user && <h4>Create a new listing</h4>}
+            { user && <form onSubmit={async (event) => {
                 event.preventDefault();
                 console.log(headers)
 
@@ -34,10 +32,13 @@ export default function NewPost ({headers, setPosts, posts}){
                     
                     .then(response => response.json())
                     .then((result) => {
-                        console.log("these ", result)
-                        setPosts(
-                            [...posts, result.data.post]
-                        )
+               
+                        setUpdateMade(updateMade + 1);
+                        // let updatedPosts = [...posts];
+                        // updatedPosts.unshift(result.data.post)
+                        // setPosts(
+                        //     updatedPosts
+                        // )
                     })
                         .catch(console.error);
 
@@ -74,7 +75,7 @@ export default function NewPost ({headers, setPosts, posts}){
             />
 
         <button type="submit" >Submit</button>       
-        </form>
+        </form>}
     </div>
 
 )
