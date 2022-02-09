@@ -45,7 +45,7 @@ const UpdatePost = ({posts, setPosts, postId, setPostId, updateMade, setUpdateMa
                 setDescription('');
                 setShowUpdate(false);
                 //setPostId(null);
-                setCurrentPost(data);
+                // setCurrentPost(data);
                 history.push('/');
 
             }

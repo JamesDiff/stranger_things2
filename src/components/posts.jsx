@@ -18,12 +18,16 @@ const Posts = ({history, updateMade, setUpdateMade, storedToken, headers, setFil
             {<Search posts={posts} filteredResults={filteredResults} setFilteredResults={setFilteredResults}/>}
             <div className='Posts-container'>
  {              filteredResults ? filteredResults.map( (post, index) => {
+
+                let date = post.createdAt.substr(0, 10);
+
                 return(                  
                     <div className='Single-post' key={index}>                     
                         <div>
                             <h3>{post.title}</h3>
                             <p>{post.description}</p>
-                            <p>{post.price}</p> 
+                            <h4>{post.price}</h4> 
+                            <h6>Posted {date}</h6>
                         </div>
                      <div className='Details-button'>      
                         <Link to={`/posts/${post._id}`}><button 

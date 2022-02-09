@@ -4,6 +4,7 @@ import {BrowserRouter as Router, Route, Link, useHistory} from 'react-router-dom
 import { findPost } from '../Api';
 import { UpdatePost } from './updatePost';
 import { deletePost, fetchPosts } from '../Api';
+import { SendMessage } from './sendMessage';
 
 
 
@@ -34,12 +35,20 @@ const SinglePost = ({ match, updateMade, setUpdateMade, post, posts, setPosts, h
     console.log("POSTS AND CURRENT POST, ", posts, currentPost)
     // debugger;
 
+    
+    let dateReturned = currentPost.createdAt.substr(0, 10);
+    console.log("THIS IS THE DATE RETURNED, ", dateReturned);
+    
+
     return <div className='Single-post-render'>
+        
         { posts.length > 0 && <>
+        {console.log("CURRENT POST WITHIN RENDER, ", currentPost)}
         <h1> {currentPost.title} </h1>
         <p> {currentPost.description} </p>
         <h3> {currentPost.price} </h3>
-        { user && currentPost && currentPost.author && user._id !== currentPost.author._id && <button
+        <h6> Posted {dateReturned} </h6>
+        { user && currentPost && currentPost.author && user._id !== currentPost.author._id && <Link to={`/posts/sendmessage/${currentPost._id}`}><button
             type="button"
             className="btn btn-outline-primary"
     
@@ -47,8 +56,12 @@ const SinglePost = ({ match, updateMade, setUpdateMade, post, posts, setPosts, h
             //     history.push("/posts/sendmessage/" + currentPost._id)
 
             // }}
+            // onClick={ async () => {
+            //     SendMessage(currentPost._id);
+            //     history.push("/posts/sendmessage/" + currentPost._id)
+            // }}
         
-        ><Link to={`/posts/sendmessage/${currentPost._id}`}>Message</Link></button> }
+        >Message</button> </Link>}
 
         { user && currentPost && currentPost.author && user._id === currentPost.author._id && <button 
             type="button"
@@ -56,7 +69,6 @@ const SinglePost = ({ match, updateMade, setUpdateMade, post, posts, setPosts, h
             onClick={() => {
                 //history.push("/posts/update/" + currentPost._id)
                 setShowUpdate(true)
-
             }}
             > Edit
         </button>}
@@ -75,7 +87,7 @@ const SinglePost = ({ match, updateMade, setUpdateMade, post, posts, setPosts, h
             > Delete
         </button>}
 
-        {showUpdate && <UpdatePost setShowUpdate = {setShowUpdate} updateMade={updateMade} setUpdateMade={setUpdateMade} setCurrentPost={setCurrentPost} currentPost={currentPost} postId = {match.params.postId} setPosts={setPosts} headers={headers} setUpdateSuccess={setUpdateSuccess}/>}
+        {showUpdate && <UpdatePost setShowUpdate = {setShowUpdate} updateMade={updateMade} setUpdateMade={setUpdateMade} /* currentPost={currentPost}*/ postId = {match.params.postId} setPosts={setPosts} headers={headers} setUpdateSuccess={setUpdateSuccess}/>}
        
         </>
 
