@@ -8,8 +8,6 @@ import { deletePost, fetchPosts } from '../Api';
 
 import { findPost } from '../Api';
 
-//selectedPost && selectedPost.author && user._id
-
 
 const RenderUserObject = ( {user, isLoggedIn, headers, post, posts, setPosts, storedToken, setUser } ) => {
 
@@ -17,7 +15,7 @@ const RenderUserObject = ( {user, isLoggedIn, headers, post, posts, setPosts, st
 
     return (
         <>
-       {!storedToken ? <Redirect to="/"/> : (
+       {!localStorage.getItem("token") ? <Redirect to="/"/> : (
             <div id="userobject" className='Route-container'>
             <h5>Hi, {user ? user.username : "guest"} </h5>
             <div>
@@ -38,8 +36,9 @@ const RenderUserObject = ( {user, isLoggedIn, headers, post, posts, setPosts, st
                 
             </div>
             <div>
-                <h4>Your Listings</h4>
+                <h4 className="Listings-head">Your Listings</h4>
                 <div className='User-posts-container'>
+                    
                   { user ? user.posts.filter(post => post.active === true).map( (post) => {
                     return <>
                         <div className='User-single-post'>   
@@ -47,18 +46,12 @@ const RenderUserObject = ( {user, isLoggedIn, headers, post, posts, setPosts, st
                         <p>{ post.description }</p>
                         <h5>{ post.price }</h5>
                         <div className='Details-button'>      
-                        <button 
+                        <Link to={`/posts/${post._id}`}><button 
                             type="button"
                             className="btn btn-outline-primary"
-                            // onClick={() => {
-                            //     const newSelectedPost = findPost(post._id, user.posts)
-                            //     console.log("this is the new selected post, ", newSelectedPost);
-                            //     setSelectedPost(newSelectedPost);
-                            //     history.push("/posts/" + post._id)
-                                 
-                            // }}                                 
-                            > <Link to={`/posts/${post._id}`}>Post Details</Link>
-                        </button>
+                                                        
+                            > Post Details
+                        </button> </Link>
                         </div>
 
                     

@@ -32,19 +32,15 @@ export default function NewPost ({headers, setPosts, posts, user, updateMade, se
                     
                     .then(response => response.json())
                     .then((result) => {
-               
                         setUpdateMade(updateMade + 1);
-                        // let updatedPosts = [...posts];
-                        // updatedPosts.unshift(result.data.post)
-                        // setPosts(
-                        //     updatedPosts
-                        // )
+                      
                     })
                         .catch(console.error);
 
              }}> 
         
         <input
+            className="TitleInput"
             type="text"
             placeholder="Title"
             onChange={(event) => {
@@ -55,6 +51,7 @@ export default function NewPost ({headers, setPosts, posts, user, updateMade, se
             />
         
         <input
+            className="DescriptionInput"
             type="text"
             placeholder="Description"
             onChange={(event) => {

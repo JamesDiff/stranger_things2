@@ -36,10 +36,10 @@ const SinglePost = ({ match, updateMade, setUpdateMade, post, posts, setPosts, h
     // debugger;
 
     
-    let dateReturned = currentPost.createdAt.substr(0, 10);
-    console.log("THIS IS THE DATE RETURNED, ", dateReturned);
+    // let dateReturned = currentPost.createdAt.substr(0, 10);
+    // console.log("THIS IS THE DATE RETURNED, ", dateReturned);
     
-
+    // debugger;
     return <div className='Single-post-render'>
         
         { posts.length > 0 && <>
@@ -47,7 +47,7 @@ const SinglePost = ({ match, updateMade, setUpdateMade, post, posts, setPosts, h
         <h1> {currentPost.title} </h1>
         <p> {currentPost.description} </p>
         <h3> {currentPost.price} </h3>
-        <h6> Posted {dateReturned} </h6>
+        <h6> Posted {currentPost.createdAt.substr(0, 10)} </h6>
         { user && currentPost && currentPost.author && user._id !== currentPost.author._id && <Link to={`/posts/sendmessage/${currentPost._id}`}><button
             type="button"
             className="btn btn-outline-primary"
@@ -87,7 +87,7 @@ const SinglePost = ({ match, updateMade, setUpdateMade, post, posts, setPosts, h
             > Delete
         </button>}
 
-        {showUpdate && <UpdatePost setShowUpdate = {setShowUpdate} updateMade={updateMade} setUpdateMade={setUpdateMade} /* currentPost={currentPost}*/ postId = {match.params.postId} setPosts={setPosts} headers={headers} setUpdateSuccess={setUpdateSuccess}/>}
+        {showUpdate && <UpdatePost setShowUpdate = {setShowUpdate} currentPost={currentPost} updateMade={updateMade} setUpdateMade={setUpdateMade} /* currentPost={currentPost}*/ postId = {match.params.postId} setPosts={setPosts} headers={headers} setUpdateSuccess={setUpdateSuccess}/>}
        
         </>
 

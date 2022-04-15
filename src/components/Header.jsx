@@ -17,16 +17,16 @@ const Header = ({token, setToken, setHeader, setUser}) => {
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto">
-              <Nav.Link ><Link to="/">Listings</Link></Nav.Link> 
+              <Nav.Link eventKey="1"><Link className="Header-link" to="/">Listings</Link></Nav.Link> 
               {!token ? (
                 <>
-                <Nav.Link ><Link to="/login">Login</Link></Nav.Link>
-                <Nav.Link ><Link to="/register">Register</Link></Nav.Link>
+                <Nav.Link eventKey="2"><Link className="Header-link" to="/login">Login</Link></Nav.Link>
+                <Nav.Link eventKey="3"><Link className="Header-link" to="/register">Register</Link></Nav.Link>
                 </>
               ) : (
                 <>
-                <Nav.Link ><Link to="/userObject">Dashboard</Link></Nav.Link>
-                <Nav.Link onClick = {logout}>Logout</Nav.Link>
+                <Nav.Link eventKey="4"><Link className="Header-link" to="/userObject">Dashboard</Link></Nav.Link>
+                <Nav.Link eventKey="5" onClick = {logout}>Logout</Nav.Link>
                 </>
               )
               }

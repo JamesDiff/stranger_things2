@@ -1,9 +1,11 @@
 import React, {useState, useEffect} from 'react';
+import { useHistory } from 'react-router-dom';
 
 
-const SendMessage = ({post, posts, setPosts, match, headers}) => {
+const SendMessage = ({post, posts, setPosts, match, updateMade, setUpdateMade, headers}) => {
     const [message, setMessage] = useState("");
     console.log("these are the headers ", headers)
+    const history = useHistory();
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -17,10 +19,12 @@ const SendMessage = ({post, posts, setPosts, match, headers}) => {
             })
         }).then(response => response.json())
         .then(result => {
+          setUpdateMade(updateMade + 1);
+          history.push('/userobject');
           return result;
         })
-        console.log(response.data);
-        return response.data;
+        // console.log(response.data);
+        // return response.data;
 
 
     }

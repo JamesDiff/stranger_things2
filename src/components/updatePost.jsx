@@ -4,9 +4,9 @@ import { useHistory } from "react-router-dom";
 
 
 const UpdatePost = ({posts, setPosts, postId, setPostId, updateMade, setUpdateMade, currentPost, setCurrentPost, headers, setShowUpdate, setUpdateSuccess}) => {  
-    const [title, setTitle] = useState("");
-    const [description, setDescription] = useState("");
-    const [price, setPrice] = useState("");
+    const [title, setTitle] = useState(currentPost.title);
+    const [description, setDescription] = useState(currentPost.description);
+    const [price, setPrice] = useState(currentPost.price);
     const history = useHistory();
 
     useEffect(() => {

@@ -5,6 +5,10 @@
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
 
+.Header-link {
+    text-decoration: none;
+}
+
 .Routes {
     padding-top: 120px;
     display: flex;
@@ -30,6 +34,13 @@
 }
 /* max-width */
 
+.TitleInput {
+    width: 250px
+}
+
+.DescriptionInput {
+    width: 375px
+}
 
 .Single-post{
     display: flex;
@@ -60,7 +71,6 @@
     width: 300px;
     -webkit-box-shadow: 9px 6px 12px 1px rgba(0,0,0,0.34); 
     box-shadow: 9px 6px 12px 1px rgba(0,0,0,0.34);
-    /* background-color: #fafcfc; */
     flex-grow: .25;
 
 }
@@ -71,6 +81,10 @@
     margin-top: 20px;
     justify-content: stretch;
 
+}
+
+.Listings-head{
+    padding-top: 5px;
 }
 
 

@@ -58,7 +58,7 @@ function register(username, password, confirmedPassword){
 
 
 const Login = ({ setToken, match, setHeader, setUser}) => {
-    const [userName, setUserName] = useState("username");
+    const [userName, setUserName] = useState("");
     const [password, setPassword] = useState("");
     const [confirmedPassword, setConfirmedPassword] = useState("");
     const history = useHistory();
@@ -99,7 +99,7 @@ const Login = ({ setToken, match, setHeader, setUser}) => {
                     onChange={({target: {value}})=> setUserName(value)} 
                     className="form-control"
                     id="exampleFormControlInput1"
-                    placeholder="your username"
+                    placeholder="username"
                 />    
                 
             </div>

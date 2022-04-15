@@ -39,13 +39,6 @@ const App = () => {
         setFilteredResults(results);
     }, [updateSuccess, updateMade] );
 
-    
-
-    // useEffect(() => {
-    //     setFilteredResults(posts);
-    // }, [posts]) 
-
-
     useEffect( async () => {
         const storedToken = localStorage.getItem("token");
         if(storedToken) {
@@ -62,28 +55,15 @@ const App = () => {
 
     return ( 
         <Router>
-            {/* {!token ?
-                <Link to="/login"> Login </Link>
-                : null }
-            {!token ? <Link to="/register">Register</Link>
-                : null }
-            {token ? 
-                <Link to="/login" onClick = {() => {
-                    localStorage.removeItem("token");
-                    setToken(null);
-                    setHeader(null);
-                    setUser(null);
-                    
-                }}>Logout</Link>
-                : null } */}
+         
             
             <Header token={token} setToken={setToken} setUser={setUser}/>
             <div className='Routes'>
                 <Route path="/login" render={(routeProps) => <Login {...routeProps} setHeader={setHeader} setToken={setToken} setUser={setUser} />}/>
                 <Route path="/register" render={(routeProps) => <Login {...routeProps} setHeader={setHeader} setToken={setToken} setUser={setUser} />} />
                 <Route path="/" exact render={(routerProps) => <Posts {...routerProps} updateMade={updateMade} setUpdateMade={setUpdateMade} setPosts={setPosts} posts={posts} user={user} filteredResults={filteredResults} setFilteredResults={setFilteredResults} isLoggedIn={!!token} storedToken={token} headers={header}/>} /> 
-                <Route path="/posts/:postId" render={(routerProps) => <SinglePost {...routerProps} updateMade={updateMade} setUpdateMade={setUpdateMade} posts={posts} setPosts={setPosts} headers={header} user={user} updateSuccess={updateSuccess} setUpdateSuccess={setUpdateSuccess}/>} />
-                <Route path="/posts/sendmessage/:postId" render={(routerProps) => <SendMessage {...routerProps} storedToken={token} headers={header}/>}/>
+                <Route path="/posts/:postId" exact render={(routerProps) => <SinglePost {...routerProps} updateMade={updateMade} setUpdateMade={setUpdateMade} posts={posts} setPosts={setPosts} headers={header} user={user} updateSuccess={updateSuccess} setUpdateSuccess={setUpdateSuccess}/>} />
+                <Route path="/posts/sendmessage/:postId" exact render={(routerProps) => <SendMessage {...routerProps} updateMade={updateMade} setUpdateMade={setUpdateMade} storedToken={token} headers={header}/>}/>
                 <Route path="/userobject" render={(routerProps) => <RenderUserObject {...routerProps} user={user} posts={posts} setPosts={setPosts} setUser={setUser} setPosts={setPosts} isLoggedIn={!!token} storedToken={token} headers={header}/>  } />
 
             </div>
